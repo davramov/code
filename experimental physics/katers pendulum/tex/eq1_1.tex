@@ -1,0 +1,117 @@
+\documentclass[12pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+\usepackage{amsmath}								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{dkgreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\title{HW 1.1}
+\author{David Abramov}	
+
+\begin{document}
+\maketitle
+
+\section{Period of Compound and Kater's Pendulums}
+
+The period of a simple pendulum is
+\begin{equation}
+T=2\pi\sqrt{\frac{L}{g}},
+\end{equation}
+where $T$ is the period, $L$ is the length of the pendulum, and $g$ is gravitational acceleration.
+
+A compound pendulum is a suspended rigid body whose center of mass does not pass through the axis of rotation. 
+
+The moment of inertia, $I$, can be found using the parallel axis theorem, given by the equation
+\begin{equation}
+I=I_{cm}+md^2,
+\end{equation}
+where $I_{cm}$ is the moment of inertia about the center of mass, $m$ is the mass, and $d$ is the distance between the pendulum's axis and the new, parallel axis.
+
+
+\begin{equation}
+g = \frac{8\pi^2(l_{1}+l_{2})}{(T_{1}^2+T_{2}^2)}
+\end{equation}
+
+\section{Center of Oscillation, Pivot Points, Radius of Gyration}
+
+\section{Measurement of g}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c | c||} 
+ \hline
+ Measured Quantity & Value \\ [0.5ex] 
+ \hline\hline
+ $T_{1} $ & $1.95832 \pm 0.00008$ s \\ 
+ $T_{2}$ &  $1.95679 \pm 0.00006$ s \\
+ $\Delta T$ & $0.0015 \pm 0.0001$ s\\ 
+ $l_{1}$ & $0.375$ m \\ 
+ $l_{total}$ & $37.306 \pm 0.001$ in = $0.9476 \pm 0.0003$ m\\ 
+ $l_{2}$ & $0.5725978$ cm\\[1ex]
+ 
+ \hline
+\end{tabular}
+\caption{Measured Quantities}
+\label{table:1}
+\end{table}
+
+\begin{equation}
+g_{experimental} = 9.799051192049667 m/s^2
+\end{equation}
+\begin{equation}
+g_{accepted} = 9.80665 m/s^2
+\end{equation}
+
+\begin{equation}
+Pecent Accuracy = 100-\frac{g_{experimental}}{g_{accepted}}*100=100-\frac{9.799051192049667}{9.80665}*100=
+\end{equation}
+
+\section{Code}
+
+\begin{lstlisting}
+l_1 = 37.5/100;
+l_2 = 0.9475978-l_1;
+T_1 = 1.958324696;
+T_2 = 1.956786207;
+
+
+a = 8*pi^2;
+la = l_1 + l_2;
+lm = l_1 - l_2;
+Ta = T_1^2 + T_2^2;
+Tm = T_1^2 - T_2^2;
+
+g_experimental = a*((Ta/la)+(Tm/lm))^(-1);
+
+g_accepted = 9.80665;
+
+accuracy = 100-(g_experimental/g_accepted)*100
+\end{lstlisting}
+
+\end{document}

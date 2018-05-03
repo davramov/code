@@ -1,0 +1,11 @@
+gpio readall
+gpio -g mode 26 out
+gpio -g write 26 on
+gip -g read 4
+
+
+octave:1> [status data] = system('sudo bcm2835-1.52/examples/spin/spin'); A=char(data);
+octave:2> B = (5/1023)*hex2dec([A(6) A(9:10)]);
+octave:3> B
+B =  3.2405
+

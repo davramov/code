@@ -1,0 +1,141 @@
+polyfit - Fit polynomial to data
+ P = polyfit(X,Y,N) finds the coefficients of a polynomial P(X) of
+    degree N that fits the data Y best in a least-squares sense. P is a
+    row vector of length N+1 containing the polynomial coefficients in
+    descending powers, P(1)*X^N + P(2)*X^(N-1) +...+ P(N)*X + P(N+1).
+ 
+    [P,S] = polyfit(X,Y,N) returns the polynomial coefficients P and a
+    structure S for use with POLYVAL to obtain error estimates for
+    predictions.  S contains fields for the triangular factor (R) from a QR
+    decomposition of the Vandermonde matrix of X, the degrees of freedom
+    (df), and the norm of the residuals (normr).  If the data Y are random,
+    an estimate of the covariance matrix of P is (Rinv*Rinv')*normr^2/df,
+    where Rinv is the inverse of R.
+ 
+    [P,S,MU] = polyfit(X,Y,N) finds the coefficients of a polynomial in
+    XHAT = (X-MU(1))/MU(2) where MU(1) = MEAN(X) and MU(2) = STD(X). This
+    centering and scaling transformation improves the numerical properties
+    of both the polynomial and the fitting algorithm.
+ 
+    Warning messages result if N is >= length(X), if X has repeated, or
+    nearly repeated, points, or if X might need centering and scaling.
+ 
+    Class support for inputs X,Y:
+       float: double, single
+
+>> x = [1 2 3 4]; y = [1.1 1.8 3.1 4.3]
+
+y =
+
+   1.100000000000000   1.800000000000000   3.100000000000000   4.300000000000000
+
+>> plot(x,y)
+>> plot(x,y)
+>> hold on
+>> plot(x,y,'o')
+>> [P,S,MU] = polyfit(X,Y,1)
+Undefined function or variable 'X'.
+ 
+Did you mean:
+>> [P,S,MU] = polyfit(x,y,1)
+
+P =
+
+   1.407183949122028   2.575000000000000
+
+
+S = 
+
+        R: [2x2 double]
+       df: 2
+    normr: 0.294957624075052
+
+
+MU =
+
+   2.500000000000000
+   1.290994448735806
+
+>> [P,S,MU] = polyfit(x,y,2)
+
+P =
+
+   0.208333333333334   1.407183949122027   2.418750000000001
+
+
+S = 
+
+        R: [3x3 double]
+       df: 1
+    normr: 0.156524758424986
+
+
+MU =
+
+   2.500000000000000
+   1.290994448735806
+
+
+>> yy=x.*P(1)+P(2)
+
+yy =
+
+   3.982183949122028   5.389367898244056   6.796551847366084   8.203735796488111
+
+>> P = polyfit(x,y,1)
+
+P =
+
+   1.090000000000000  -0.150000000000000
+
+>> yy = x.*P(1) + P(2)
+
+yy =
+
+   0.940000000000000   2.030000000000000   3.120000000000000   4.210000000000000
+
+>> figure(1);clf;hold on
+>> plot(x,y,'o');plot(x,yy);
+>> 
+>> P = polyfit(x,y,2)
+
+P =
+
+   0.125000000000000   0.464999999999999   0.475000000000001
+
+>> yy2=(x.^2).*P(1)+X.*P(2)+P(3)
+Undefined function or variable 'X'.
+ 
+Did you mean:
+>> yy2=(x.^2).*P(1)+x.*P(2)+P(3)
+
+yy2 =
+
+   1.065000000000001   1.905000000000000   2.995000000000001   4.335000000000002
+
+>> figure(2);clf;hold on
+>> plot(x,y,'o')
+>> plot(x,yy2)
+>> figure(2)
+>> xx = 0.1:0.1:5;
+>> size(xx)
+
+ans =
+
+     1    50
+
+>> figure(2);clf;hold on
+>> plot(x,y,'o')
+>> plot(xx,yy)
+Error using plot
+Vectors must be the same length.
+ 
+>> size(yy)
+
+ans =
+
+     1     4
+
+>> yy = P(1).*xx.^2 + P(2).*xx + P(3);
+>> plot(xx,yy)
+>> 
